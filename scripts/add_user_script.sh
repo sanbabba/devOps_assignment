@@ -2,6 +2,7 @@
 #Create an encrypted password
 #Update the password in sudoers
 # git clone , clone the scripts folder
+#https://dev.to/narongdejsrn/upgrading-php-to-7-3-with-ansible-4fp1
 
 if [ $(id -u) -eq 0 ]; then
 	read -p "Enter username : " username
@@ -26,3 +27,9 @@ fi
 `git clone https://github.com/sanbabba/devOps_assignment`
 
 `echo "[php_hosts]" >> /etc/ansible/hosts`
+`terraform output instance_ips | grep [0-9] >> /etc/ansible/hosts`
+
+`ansible-galaxy install geerlingguy.repo-remi`
+`ansible-galaxy install geerlingguy.php-versions`
+`ansible-galaxy install geerlingguy.php`
+`ansible-playbook install-php.yml`
