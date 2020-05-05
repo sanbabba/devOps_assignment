@@ -24,3 +24,5 @@ fi
 
 `mkdir /home/$username/scripts/`
 `git clone https://github.com/sanbabba/devOps_assignment`
+
+`echo "[php_hosts]" >> /etc/ansible/hosts`
