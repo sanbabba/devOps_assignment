@@ -1,0 +1,52 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_autoscaling_group.example" [label = "aws_autoscaling_group.example", shape = "box"]
+		"[root] aws_cloudwatch_metric_alarm.foobar" [label = "aws_cloudwatch_metric_alarm.foobar", shape = "box"]
+		"[root] aws_elb.example" [label = "aws_elb.example", shape = "box"]
+		"[root] aws_instance.web" [label = "aws_instance.web", shape = "box"]
+		"[root] aws_launch_configuration.example" [label = "aws_launch_configuration.example", shape = "box"]
+		"[root] aws_security_group.elb" [label = "aws_security_group.elb", shape = "box"]
+		"[root] aws_security_group.instance" [label = "aws_security_group.instance", shape = "box"]
+		"[root] data.aws_availability_zones.all" [label = "data.aws_availability_zones.all", shape = "box"]
+		"[root] output.elb_dns_name" [label = "output.elb_dns_name", shape = "note"]
+		"[root] output.instance_ids" [label = "output.instance_ids", shape = "note"]
+		"[root] provider.aws" [label = "provider.aws", shape = "diamond"]
+		"[root] var.amis" [label = "var.amis", shape = "note"]
+		"[root] var.count1" [label = "var.count1", shape = "note"]
+		"[root] var.key_name" [label = "var.key_name", shape = "note"]
+		"[root] var.public_key_path" [label = "var.public_key_path", shape = "note"]
+		"[root] var.region" [label = "var.region", shape = "note"]
+		"[root] aws_autoscaling_group.example" -> "[root] aws_elb.example"
+		"[root] aws_autoscaling_group.example" -> "[root] aws_launch_configuration.example"
+		"[root] aws_cloudwatch_metric_alarm.foobar" -> "[root] provider.aws"
+		"[root] aws_elb.example" -> "[root] aws_security_group.elb"
+		"[root] aws_elb.example" -> "[root] data.aws_availability_zones.all"
+		"[root] aws_instance.web" -> "[root] aws_security_group.instance"
+		"[root] aws_instance.web" -> "[root] var.amis"
+		"[root] aws_instance.web" -> "[root] var.key_name"
+		"[root] aws_instance.web" -> "[root] var.region"
+		"[root] aws_launch_configuration.example" -> "[root] aws_security_group.instance"
+		"[root] aws_launch_configuration.example" -> "[root] var.amis"
+		"[root] aws_launch_configuration.example" -> "[root] var.key_name"
+		"[root] aws_launch_configuration.example" -> "[root] var.region"
+		"[root] aws_security_group.elb" -> "[root] provider.aws"
+		"[root] aws_security_group.instance" -> "[root] provider.aws"
+		"[root] data.aws_availability_zones.all" -> "[root] provider.aws"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_autoscaling_group.example"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_cloudwatch_metric_alarm.foobar"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.elb_dns_name"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.instance_ids"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] var.count1"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] var.public_key_path"
+		"[root] output.elb_dns_name" -> "[root] aws_elb.example"
+		"[root] output.instance_ids" -> "[root] aws_instance.web"
+		"[root] provider.aws (close)" -> "[root] aws_autoscaling_group.example"
+		"[root] provider.aws (close)" -> "[root] aws_cloudwatch_metric_alarm.foobar"
+		"[root] provider.aws (close)" -> "[root] aws_instance.web"
+		"[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+		"[root] root" -> "[root] provider.aws (close)"
+	}
+}
+
