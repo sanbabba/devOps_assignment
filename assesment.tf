@@ -17,6 +17,15 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = ["${aws_security_group.instance.id}"]
   source_dest_check      = false
   instance_type          = "t2.micro"
+  user_data = << EOF
+		#! /bin/bash
+        sudo apt-get update
+		sudo apt-get install -y git
+		sudo apt-get install -y apache2
+		sudo systemctl start apache2
+		sudo systemctl enable apache2
+		echo "<h1>Deployed via Terraform</h1>" | sudo tee /var/www/html/index.html
+	EOF
   tags {
     Name = "${format("web-%03d", count.index + 1)}"
   }
