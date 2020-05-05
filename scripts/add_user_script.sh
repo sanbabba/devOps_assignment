@@ -1,6 +1,7 @@
 #https://linuxize.com/post/how-to-add-user-to-sudoers-in-ubuntu/
 #Create an encrypted password
 #Update the password in sudoers
+# git clone , clone the scripts folder
 
 if [ $(id -u) -eq 0 ]; then
 	read -p "Enter username : " username
@@ -20,3 +21,6 @@ else
 	echo "Only root may add a user to the system."
 	exit 2
 fi
+
+`mkdir /home/$username/scripts/`
+`git clone https://github.com/sanbabba/devOps_assignment`
