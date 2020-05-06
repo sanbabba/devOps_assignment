@@ -1,0 +1,19 @@
+  ---
+	- name: s3 creation and lifecycle
+	  hosts: php-installed-hosts
+	  gather_facts: False
+	  remote_user: devopsadmin
+	  roles:
+	  - create-s3-bucket
+
+		# Create a simple s3 bucket
+		- s3_bucket:
+        name: mys3bucket
+        state: present
+
+		- s3_lifecycle:
+        name: mybucket
+        transition_days: 90    
+        prefix: /logs/
+        status: enabled
+        state: present
