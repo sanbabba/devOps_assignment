@@ -1,0 +1,25 @@
+ ---
+   - hosts: all  
+     remote_user: devopsadmin
+	- name: check whether counter application is running
+	
+	- git:
+		repo: https://github.com/ansible/ansible-examples.git
+		dest: /home/devopsadmin/scripts/https://github.com/sanbabba/devOps_assignment
+		archive: /tmp/ansible-examples.zip
+	 
+	 tasks:
+	   - name: Make sure a service is running
+		 systemd:
+			state: started
+			name: httpd 
+	 
+	   - name: start script
+	     command: php  /var/www/html/counter.php
+		    register: output
+	   
+	   - name: show result
+	     debug: var=output.stdout
+		
+	   - name: show errors
+	     debug: var=output.stderr
