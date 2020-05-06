@@ -4,8 +4,8 @@
 	- name: check whether counter application is running
 	
 	- git:
-		repo: https://github.com/ansible/ansible-examples.git
-		dest: /home/devopsadmin/scripts/https://github.com/sanbabba/devOps_assignment
+		repo: https://github.com/sanbabba/devOps_assignment.git
+		dest: /home/devopsadmin/scripts/
 		archive: /tmp/ansible-examples.zip
 	 
 	 tasks:
