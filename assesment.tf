@@ -13,7 +13,7 @@ provider "aws" {
 data "aws_availability_zones" "all" {}
 ### Creating EC2 instance
 resource "aws_instance" "web" {
-  ami                    = "ami-0a54aef4ef3b5f881"
+  ami                    = "ami-098f16afa9edf40be"
   count                  = "${var.count1}"
   key_name               = "${var.key_name}"
   vpc_security_group_ids = ["${aws_security_group.instance.id}"]
@@ -53,7 +53,7 @@ resource "aws_security_group" "instance" {
 }
 ## Creating Launch Configuration
 resource "aws_launch_configuration" "example" {
-  image_id        = "ami-0a54aef4ef3b5f881"
+  image_id        = "ami-098f16afa9edf40be"
   instance_type   = "t2.micro"
   security_groups = ["${aws_security_group.instance.id}"]
   key_name        = "${var.key_name}"
