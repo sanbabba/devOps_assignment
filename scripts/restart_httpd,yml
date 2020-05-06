@@ -4,3 +4,4 @@
 	  service:
       name: httpd
       state: restarted	
+      ignore_errors: True
