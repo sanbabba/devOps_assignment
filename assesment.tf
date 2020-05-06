@@ -2,18 +2,17 @@
 #
 #=========================================================================================
 #==================================================================================
-  #access_key = "aws_access_key_id"
-  #secret_key = "aws_secret_access_key_id"
+
 provider "aws" {
 
-  access_key = "AKIAZ2T33MOC3Y6X365Q"
-  secret_key = "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"
-  region     = "us-east-1"
+  access_key = "AKIAZ2T33MOCVNGXAOME"
+  secret_key = "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"
+  region     = "us-west-1"
 }
 data "aws_availability_zones" "all" {}
 ### Creating EC2 instance
 resource "aws_instance" "web" {
-  ami                    = "ami-098f16afa9edf40be"
+  ami                    = "${lookup(var.amis,var.region)}"
   count                  = "${var.count1}"
   key_name               = "${var.key_name}"
   vpc_security_group_ids = ["${aws_security_group.instance.id}"]
@@ -53,7 +52,7 @@ resource "aws_security_group" "instance" {
 }
 ## Creating Launch Configuration
 resource "aws_launch_configuration" "example" {
-  image_id        = "ami-098f16afa9edf40be"
+  image_id        = "${lookup(var.amis,var.region)}"
   instance_type   = "t2.micro"
   security_groups = ["${aws_security_group.instance.id}"]
   key_name        = "${var.key_name}"
