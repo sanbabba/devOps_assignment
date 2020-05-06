@@ -11,12 +11,16 @@
 	 tasks:
 	   - name: Make sure a service is running
 		 systemd:
-			state: started
-			name: httpd 
+		state: started
+		name: httpd 
 	 
 	   - name: start script
 	     command: php  /var/www/html/counter.php
-		    register: output
+	    async: 500
+	    poll: 0
+	    register: output
+		    
+	   - name: get the task status using
 	   
 	   - name: show result
 	     debug: var=output.stdout
