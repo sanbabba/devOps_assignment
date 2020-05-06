@@ -2,11 +2,13 @@
 #
 #=========================================================================================
 #==================================================================================
-
+  #access_key = "aws_access_key_id"
+  #secret_key = "aws_secret_access_key_id"
 provider "aws" {
-  access_key = "aws_access_key_id"
-  secret_key = "aws_secret_access_key_id"
-  region     = "ap-south-1"
+
+  access_key = "AKIAZ2T33MOC2VUKL23T"
+  secret_key = "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"
+  region     = "us-east-1"
 }
 data "aws_availability_zones" "all" {}
 ### Creating EC2 instance
@@ -16,8 +18,12 @@ resource "aws_instance" "web" {
   key_name               = "${var.key_name}"
   vpc_security_group_ids = ["${aws_security_group.instance.id}"]
   source_dest_check      = false
-  instance_type          = "t2.micro"
-  user_data = << EOF
+  instance_type          = "t2.micro"  
+  tags = {
+	Name = "${format("web-%03d", count.index + 1)}"
+  }
+  
+  user_data = <<-EOF
 		#! /bin/bash
         sudo apt-get update
 		sudo apt-get install -y git
@@ -26,10 +32,8 @@ resource "aws_instance" "web" {
 		sudo systemctl start apache2
 		sudo systemctl enable apache2
 		echo "<h1>Deployed via Terraform</h1>" | sudo tee /var/www/html/index.html
-	EOF
-  tags {
-    Name = "${format("web-%03d", count.index + 1)}"
-  }
+		EOF
+
 }
 ### Creating Security Group for EC2
 resource "aws_security_group" "instance" {
@@ -65,7 +69,7 @@ resource "aws_launch_configuration" "example" {
 ## Creating AutoScaling Group
 resource "aws_autoscaling_group" "example" {
   launch_configuration = "${aws_launch_configuration.example.id}"
-  availability_zones   = ["${data.aws_availability_zones.all.names}"]
+  availability_zones   = ["${data.aws_availability_zones.all.names[0]}"]
   min_size             = 1
   max_size             = 2
   load_balancers       = ["${aws_elb.example.name}"]
@@ -96,7 +100,7 @@ resource "aws_security_group" "elb" {
 resource "aws_elb" "example" {
   name               = "terraform-asg-example"
   security_groups    = ["${aws_security_group.elb.id}"]
-  availability_zones = ["${data.aws_availability_zones.all.names}"]
+  availability_zones = ["${data.aws_availability_zones.all.names[0]}"]
   health_check {
     healthy_threshold   = 2
     unhealthy_threshold = 2
