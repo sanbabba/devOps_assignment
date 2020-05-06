@@ -33,3 +33,6 @@ fi
 `ansible-galaxy install geerlingguy.php-versions`
 `ansible-galaxy install geerlingguy.php`
 `ansible-playbook install-php.yml`
+
+
+# COpy the php script to /var/www/html
